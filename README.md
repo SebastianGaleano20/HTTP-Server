@@ -3,6 +3,7 @@
 Indicaciones de los pasos y comandos ejecutados en este proyecto!
 
 <!-- Iniciamos nuestro proyecto: -->
+
 - npm init --y (-y instala los valores por defecto)
   En nuestro archivo package.json definimos nuestros scripts:
 - "scripts":(
@@ -12,6 +13,7 @@ Indicaciones de los pasos y comandos ejecutados en este proyecto!
   --watch es una herramienta incorporada en node para que nuestro archivo se vuelva a ejecutar en la terminal cada vez que reciba un cambio en el mismo.
 
 <!-- Creamos las carpetas y archivos a utilizar en nuestro proyecto: -->
+
 - En terminal: mkdir (para carpetas) - touch (para archivos)
 - src: carpeta que contiene nuestros archivos principales
 - database: carpeta que contiene nuestro archivo json para nuestra base de datos
@@ -22,9 +24,11 @@ Indicaciones de los pasos y comandos ejecutados en este proyecto!
 - .gitignore: es nuestro archivo que contiene el nombre de nuestros archivos a ignorar en caso de subirlo a un repositorio git
 
 <!-- Para que nuestro proyecto pueda utilizar modulos debo indicarselo en el archivo package.json. : -->
+
 - "type": "module"
 
 <!-- Creamos nuestro servidor http: -->
+
 - import http from "node:http" - Para importar el modulo http y poder utilizarlo
 - const serverhttp = http.createServer() - Para guardar en una variable la funcion que crea nuestro servidor http
   http.createServer( (request,response)=>{})
@@ -35,6 +39,7 @@ Indicaciones de los pasos y comandos ejecutados en este proyecto!
 - serverhttp.listen() es nuestra funcion para colocar nuestro servidor en un puerto.
 
 <!-- De forma nativa, le indicamos al servidor los headers (encabezados que contienen informacion): -->
+
 - response.writeHead() - se utiliza para indicarle al servidor que contenido envio a la respuesta.
 - "Content-Type" se utiliza para filtrar el tipo de contenido que muestra la respuesta
 - "Content-Type" - "text/plain" (texto plano) - Le indico que el contenido va a ser de tipo texto plano.
@@ -43,6 +48,7 @@ Indicaciones de los pasos y comandos ejecutados en este proyecto!
 - response.writeHead(200, {"Content-Type": "application/json; charset=utf8"}); Nos permite utilizar tildes y ñ.
 
 <!-- Peticion Libre, sin discriminar el tipo de metodo indicado -->
+
 const serverhttp = http.createServer((request,response)=>{
 response.writeHead(200, {"Content-Type": "application/json; charset=utf8"});
 
@@ -59,44 +65,57 @@ response.end(jsonData);
 <!-- Instalamos una extension para poder realizar una petision POST. (RapiAPIClient por ej) -->
 
 <!-- Creamos nuestra app para recibir peticiones de tipo GET y POST. -->
+
 - Podemos utilizar if/else o switch para indicar las peticiones y sus retornos.
 - request.method es nuestra peticion a evaluar y en caso de coincidir realizara una accion la cual muestra informacion de nuestra aplicacion.
   Ejemplo con if/else:
   const serverhttp = http.createServer((req,res) =>{
-  if(request.method === "GET") {  
-   response.writeHead(200, {"Content-Type": "application/json; charset=utf8"});
-  response.end("Solicitud GET recibida);
-  }else if(request.method === "POST){
-  response.writeHead(200, {"Content-Type": "application/json; charset=utf8"});
-  response.end("Solicitud POST recibida);
+- if(request.method === "GET") {  
+   response.writeHead(200, {
+    "Content-Type": "application/json; charset=utf8"
+    });
+   response.end("Solicitud GET recibida);
+  } else if(request.method === "POST){
+   response.writeHead(200, {
+    "Content-Type": "application/json; charset=utf8"
+    });
+   response.end("Solicitud POST recibida);
   }
   });
 
-const serverhttp = http.createServer((req,res) =>{
-switch(req.method){
-case 'GET':
-res.writeHead(200, {"Content-Type": "application/json; charset=utf8"});
-res.end('Solicitud GET recibida');
-break;
-case 'POST':
-res.writeHead(200, {"Content-Type": "application/json; charset=utf8"});
-res.end('Solicitud POST recibida');
-break;
-default:
-res.writeHead(200, {"Content-Type": "application/json; charset=utf8"});
-res.end('Solicitud recibida');
-break;
-}
+- const serverhttp = http.createServer((req,res) =>{
+  switch(req.method){
+  case 'GET':
+      res.writeHead(200, {
+        "Content-Type": "application/json; charset=utf8"
+        });
+      res.end('Solicitud GET recibida');
+      break;
+   case 'POST':
+      res.writeHead(200, {
+        "Content-Type": "application/json; charset=utf8"
+        });
+   res.end('Solicitud POST recibida');
+   break;
+   default:
+   res.writeHead(200, {
+    "Content-Type": "application/json; charset=utf8"
+    });
+   res.end('Solicitud recibida');
+   break;
+ }
 });
 En cada caso res.end finaliza cada operacion realizada.
 
 <!-- Enviamos datos del servidor mediante el metodo POST: -->
+
 - En case POST:
   creamos una variable para guardar el contenido de body
 - body: Es el contenido del cuerpo del mensaje en los servidores http (tanto en la req y la res).
   let body = '';
 
 <!-- Luego creamos una funcion que recibira nuestra data. -->
+
 res.on('data', (chunk)=>{
 body += chunk;
 })
@@ -113,40 +132,60 @@ req.on("end", () => {
   res.end(body); })
 
 <!-- Instalamos dotenv para crear la variable de entorno: -->
+
 - npm i dotenv
   importamos dotenv
   import dotenv from "dotenv"
 
 <!-- Configuramos nuestro puerto en una constante para utilizarla en nuestra aplicación -->
+
 const port = process.env.PORT;
 
 <!--- Configuramos las RUTAS de nuestro proyecto --->
+
 - Dentro del switch utilizamos un if para configurar que response.url === a la url que le indiquemos:
-case "GET":
-      res.writeHead(200, {
-        "Content-Type": "application/json; charset=utf8",
-      });
-      if (req.url === "/Inicio") {
-        res.end("Solicitud GET recibida");
-        break;
-      } else {
-        res.end("Peticion url incorrecta");
-      }
-<!-- Configuramos POST -->
-Al configurar POST podemos indicar URL para recibir informacion y mostrarla en pantalla.
--  if(req.url === '/products'){
-        let body = "";
-        req.on("data", (chunk) => {
-          body += chunk;
-        });
-        req.on('end',()=>{
-            res.end(body);
-        });
-        }else{
-            res.end('Peticion POST incorrecta')
-        }
-      break;
+  case "GET":
+  res.writeHead(200, {
+  "Content-Type": "application/json; charset=utf8",
+  });
+  if (req.url === "/Inicio") {
+  res.end("Solicitud GET recibida");
+  break;
+  } else {
+  res.end("Peticion url incorrecta");
+  }
+  <!-- Configuramos POST -->
+  Al configurar POST podemos indicar URL para recibir informacion y mostrarla en pantalla.
+- if(req.url === '/products'){
+  let body = "";
+  req.on("data", (chunk) => {
+  body += chunk;
+  });
+  req.on('end',()=>{
+  res.end(body);
+  });
+  }else{
+  res.end('Peticion POST incorrecta')
+  }
+  break;
 
   <!-- Creamos nuestra base de datos / Array en formato JSON en nuestra carpeta database -->
-  
+<!-- Importamos fs para acceder a la base de datos -->
+- import fs from 'node:fs'
+
+<!-- Creamos una condicion y utilizamos fs para nuestro primer endpoint -->
+- Los endpoint son las url que nos retornan informacion.
+- if (req.url === "/products") - Para que coincida la url con la peticion y poder mostrarle la lista de productos
+- const productsBuffer = fs.readFileSync(' ') - recibimos dentro del if creado la informacion de nuestra base de datos recibida como parametro en el metodo readFileSync en formato Buffer.
+- Convertimos la data buffer en data parseada:
+
+        const productParsed = JSON.stringify(productsBuffer.toString());
+
+- Convertimos por ultimo la data parseada en string:
+
+        const productJSON = JSON.stringify(productParsed);
+
+- Por ultimo response.end(productJSON); y en pantalla se muestra el contenido de la base de datos.
+
+Por buena practica, creamos una funcion readDb() para que lea nuestra base de datos. 
 
