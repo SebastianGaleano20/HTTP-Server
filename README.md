@@ -144,31 +144,37 @@ const port = process.env.PORT;
 <!--- Configuramos las RUTAS de nuestro proyecto --->
 
 - Dentro del switch utilizamos un if para configurar que response.url === a la url que le indiquemos:
-  case "GET":
-  res.writeHead(200, {
-  "Content-Type": "application/json; charset=utf8",
-  });
-  if (req.url === "/Inicio") {
-  res.end("Solicitud GET recibida");
-  break;
-  } else {
-  res.end("Peticion url incorrecta");
-  }
+   case "GET":
+      res.writeHead(200, {
+        "Content-Type": "application/json; charset=utf8",
+      });
+      if (req.url === "/products") {
+       const productParsed = readDb();
+       const productJSON = JSON.stringify(productParsed);
+       
+        res.end(productJSON);
+      } else {
+        res.end("Peticion url incorrecta");
+      }
+      break;
   <!-- Configuramos POST -->
   Al configurar POST podemos indicar URL para recibir informacion y mostrarla en pantalla.
-- if(req.url === '/products'){
-  let body = "";
-  req.on("data", (chunk) => {
-  body += chunk;
-  });
-  req.on('end',()=>{
-  res.end(body);
-  });
-  }else{
-  res.end('Peticion POST incorrecta')
-  }
-  break;
-
+- case "POST":
+        res.writeHead(200, {
+          "Content-Type": "application/json; charset=utf8",
+        });
+       if(req.url === '/products'){
+        let body = "";
+        req.on("data", (chunk) => {
+          body += chunk;
+        });
+        req.on('end',()=>{
+            res.end(body);
+        });
+        }else{
+            res.end('Peticion POST incorrecta')
+        }
+      break;
   <!-- Creamos nuestra base de datos / Array en formato JSON en nuestra carpeta database -->
 <!-- Importamos fs para acceder a la base de datos -->
 - import fs from 'node:fs'
