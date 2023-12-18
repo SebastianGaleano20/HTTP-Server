@@ -30,7 +30,8 @@ Creamos nuestro servidor http:
 http.createServer( (request,response)=>{}) 
 los callback http siempre retornan un objeto con 2 propiedades:
 - request (Lo que le pido al servidor) - response (Lo que me responde el servidor)
-
+La request es la peticion que se realiza desde el navegador en el input de URL.
+Siempre es un metodo GET. 
 - serverhttp.listen() es nuestra funcion para colocar nuestro servidor en un puerto. 
 
 De forma nativa, le indicamos al servidor los headers (encabezados que contienen informacion):
@@ -39,3 +40,20 @@ De forma nativa, le indicamos al servidor los headers (encabezados que contienen
 - "Content-Type" - "text/plain" (texto plano) - Le indico que el contenido va a ser de tipo texto plano. 
 - "Content-Type" - "text/html" - Le indico que el contenido contiene elementos html.
 - "Content-Type" - "application/json" - Le indico que el contenido responde json data.
+- response.writeHead(200, {"Content-Type": "application/json; charset=utf8"}); Nos permite utilizar tildes y ñ. 
+
+Instalamos una extension para poder realizar una petision POST. (RapiAPIClient por ej)
+
+Creamos nuestra app para recibir peticiones de tipo GET y POST.
+- Podemos utilizar if/else o switch para indicar las peticiones y sus retornos.
+- request.method es nuestra peticion a evaluar y en caso de coincidir realizara una accion la cual muestra informacion de nuestra aplicacion. 
+Ejemplo con if/else:
+- if(request.method === "GET") {  
+    response.writeHead(200, {"Content-Type": "application/json; charset=utf8"});
+  
+  response.end("Solicitud GET recibida); 
+}else if(request.method === "POST){
+    response.writeHead(200, {"Content-Type": "application/json; charset=utf8"});
+  
+  response.end("Solicitud POST recibida);
+}
