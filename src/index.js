@@ -5,7 +5,7 @@ dotenv.config();
 
 const port = process.env.PORT;
 
-const readDb = () =>{
+    const readDb = () =>{
     const productsBuffer = fs.readFileSync('./src/database/products.json');
     const productParsed = JSON.parse(productsBuffer.toString());
     return productParsed;
@@ -33,12 +33,19 @@ const serverhttp = http.createServer((req, res) => {
           "Content-Type": "application/json; charset=utf8",
         });
        if(req.url === '/products'){
+        const products = readDb();
+
         let body = "";
+
         req.on("data", (chunk) => {
           body += chunk;
         });
+
         req.on('end',()=>{
-            res.end(body);
+            const product = JSON.parse(body);
+            products.push(product);
+            fs.writeFileSync('./src/database/products.json', JSON.stringify(products))
+            res.end('Producto agregado con exito');
         });
         }else{
             res.end('Peticion POST incorrecta')

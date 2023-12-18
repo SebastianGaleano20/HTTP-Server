@@ -193,5 +193,28 @@ const port = process.env.PORT;
 
 - Por ultimo response.end(productJSON); y en pantalla se muestra el contenido de la base de datos.
 
-Por buena practica, creamos una funcion readDb() para que lea nuestra base de datos. 
+- Por buena practica, creamos una funcion readDb() para que lea nuestra base de datos: 
+
+    const readDb = () =>{
+    const productsBuffer = fs.readFileSync('./src/database/products.json');
+    const productParsed = JSON.parse(productsBuffer.toString());
+    return productParsed;
+
+}
+
+<!-- Creamos el endpoint en POST -->
+- Leemos la base de datos guardandola en una variable:
+
+        const products = readDb();
+
+- y en el evento end le indicamos la accion de guardar la informacion recibida con el metodo POST reescribiendo la base de datos con modulos fs.
+
+        req.on('end',()=>{
+            const product = JSON.parse(body);
+            products.push(product);
+            fs.writeFileSync('./src/database/products.json', JSON.stringify(products))
+            res.end('Producto agregado con exito');
+        });
+
+- La data recibida en body se debe parsear para luego pushearla y reescribirla con fs.writeFileSync a la base de datos. Por ultimo le mostramos al cliente un mensaje de exito.
 
