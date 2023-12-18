@@ -24,5 +24,18 @@ creamos las carpetas y archivos a utilizar en nuestro proyecto:
 Para que nuestro proyecto pueda utilizar modulos debo indicarselo en el archivo package.json. :
 - "type": "module"
 
+Creamos nuestro servidor http:
+- import http from "node:http" - Para importar el modulo http y poder utilizarlo
+- const serverhttp = http.createServer() - Para guardar en una variable la funcion que crea nuestro servidor http
+http.createServer( (request,response)=>{}) 
+los callback http siempre retornan un objeto con 2 propiedades:
+- request (Lo que le pido al servidor) - response (Lo que me responde el servidor)
 
+- serverhttp.listen() es nuestra funcion para colocar nuestro servidor en un puerto. 
 
+De forma nativa, le indicamos al servidor los headers (encabezados que contienen informacion):
+- response.writeHead() - se utiliza para indicarle al servidor que contenido envio a la respuesta.
+- "Content-Type" se utiliza para filtrar el tipo de contenido que muestra la respuesta
+- "Content-Type" - "text/plain" (texto plano) - Le indico que el contenido va a ser de tipo texto plano. 
+- "Content-Type" - "text/html" - Le indico que el contenido contiene elementos html.
+- "Content-Type" - "application/json" - Le indico que el contenido responde json data.
