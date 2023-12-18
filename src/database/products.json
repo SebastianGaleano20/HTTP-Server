@@ -1,0 +1,43 @@
+[
+    {
+      "nombre": "Camiseta",
+      "precio": 29.99,
+      "sku": "CAM-001",
+      "talles": ["S", "M", "L", "XL"],
+      "marca": "Nike",
+      "enStock": true
+    },
+    {
+      "nombre": "Zapatillas",
+      "precio": 79.99,
+      "sku": "ZAP-002",
+      "talles": ["US 7", "US 8", "US 9", "US 10"],
+      "marca": "Adidas",
+      "enStock": false
+    },
+    {
+      "nombre": "Pantalón",
+      "precio": 39.99,
+      "sku": "PAN-003",
+      "talles": ["XS", "S", "M", "L"],
+      "marca": "Puma",
+      "enStock": true
+    },
+    {
+      "nombre": "Gorra",
+      "precio": 19.99,
+      "sku": "GOR-004",
+      "talles": ["Único"],
+      "marca": "New Era",
+      "enStock": true
+    },
+    {
+      "nombre": "Calcetines",
+      "precio": 9.99,
+      "sku": "CAL-005",
+      "talles": ["S/M", "L/XL"],
+      "marca": "Under Armour",
+      "enStock": false
+    }
+  ]
+  

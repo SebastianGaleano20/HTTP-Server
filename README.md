@@ -2,8 +2,7 @@
 
 Indicaciones de los pasos y comandos ejecutados en este proyecto!
 
-iniciamos nuestro proyecto:
-
+<!-- Iniciamos nuestro proyecto: -->
 - npm init --y (-y instala los valores por defecto)
   En nuestro archivo package.json definimos nuestros scripts:
 - "scripts":(
@@ -12,8 +11,7 @@ iniciamos nuestro proyecto:
   esto nos permite ejecutar en nuestra terminal nuestro proyecto indicandole el archivo principal que contiene nuestro servidor.
   --watch es una herramienta incorporada en node para que nuestro archivo se vuelva a ejecutar en la terminal cada vez que reciba un cambio en el mismo.
 
-creamos las carpetas y archivos a utilizar en nuestro proyecto:
-
+<!-- Creamos las carpetas y archivos a utilizar en nuestro proyecto: -->
 - En terminal: mkdir (para carpetas) - touch (para archivos)
 - src: carpeta que contiene nuestros archivos principales
 - database: carpeta que contiene nuestro archivo json para nuestra base de datos
@@ -23,12 +21,10 @@ creamos las carpetas y archivos a utilizar en nuestro proyecto:
 - .env.example: es nuestro archivo que es subido luego a nuestro repositorio git
 - .gitignore: es nuestro archivo que contiene el nombre de nuestros archivos a ignorar en caso de subirlo a un repositorio git
 
-Para que nuestro proyecto pueda utilizar modulos debo indicarselo en el archivo package.json. :
-
+<!-- Para que nuestro proyecto pueda utilizar modulos debo indicarselo en el archivo package.json. : -->
 - "type": "module"
 
-Creamos nuestro servidor http:
-
+<!-- Creamos nuestro servidor http: -->
 - import http from "node:http" - Para importar el modulo http y poder utilizarlo
 - const serverhttp = http.createServer() - Para guardar en una variable la funcion que crea nuestro servidor http
   http.createServer( (request,response)=>{})
@@ -38,8 +34,7 @@ Creamos nuestro servidor http:
   Siempre es un metodo GET.
 - serverhttp.listen() es nuestra funcion para colocar nuestro servidor en un puerto.
 
-De forma nativa, le indicamos al servidor los headers (encabezados que contienen informacion):
-
+<!-- De forma nativa, le indicamos al servidor los headers (encabezados que contienen informacion): -->
 - response.writeHead() - se utiliza para indicarle al servidor que contenido envio a la respuesta.
 - "Content-Type" se utiliza para filtrar el tipo de contenido que muestra la respuesta
 - "Content-Type" - "text/plain" (texto plano) - Le indico que el contenido va a ser de tipo texto plano.
@@ -47,8 +42,8 @@ De forma nativa, le indicamos al servidor los headers (encabezados que contienen
 - "Content-Type" - "application/json" - Le indico que el contenido responde json data.
 - response.writeHead(200, {"Content-Type": "application/json; charset=utf8"}); Nos permite utilizar tildes y ñ.
 
-//Peticion Libre, sin discriminar el tipo de metodo indicado
-/\* const serverhttp = http.createServer((request,response)=>{
+<!-- Peticion Libre, sin discriminar el tipo de metodo indicado -->
+const serverhttp = http.createServer((request,response)=>{
 response.writeHead(200, {"Content-Type": "application/json; charset=utf8"});
 
     const data = {
@@ -59,12 +54,11 @@ response.writeHead(200, {"Content-Type": "application/json; charset=utf8"});
     const jsonData = JSON.stringify(data)
 
 response.end(jsonData);
-});\*/
+});
 
-Instalamos una extension para poder realizar una petision POST. (RapiAPIClient por ej)
+<!-- Instalamos una extension para poder realizar una petision POST. (RapiAPIClient por ej) -->
 
-Creamos nuestra app para recibir peticiones de tipo GET y POST.
-
+<!-- Creamos nuestra app para recibir peticiones de tipo GET y POST. -->
 - Podemos utilizar if/else o switch para indicar las peticiones y sus retornos.
 - request.method es nuestra peticion a evaluar y en caso de coincidir realizara una accion la cual muestra informacion de nuestra aplicacion.
   Ejemplo con if/else:
@@ -96,15 +90,13 @@ break;
 });
 En cada caso res.end finaliza cada operacion realizada.
 
-Enviamos datos del servidor mediante el metodo POST:
-
+<!-- Enviamos datos del servidor mediante el metodo POST: -->
 - En case POST:
   creamos una variable para guardar el contenido de body
 - body: Es el contenido del cuerpo del mensaje en los servidores http (tanto en la req y la res).
   let body = '';
 
-Luego creamos una funcion que recibira nuestra data.
-
+<!-- Luego creamos una funcion que recibira nuestra data. -->
 res.on('data', (chunk)=>{
 body += chunk;
 })
@@ -120,12 +112,41 @@ req.on("end", () => {
 - Finalizamos mostrando body.
   res.end(body); })
 
-Instalamos dotenv para crear la variable de entorno:
-
+<!-- Instalamos dotenv para crear la variable de entorno: -->
 - npm i dotenv
   importamos dotenv
   import dotenv from "dotenv"
 
-y configuramos nuestro puerto en una constante para utilizarla en nuestra aplicación
+<!-- Configuramos nuestro puerto en una constante para utilizarla en nuestra aplicación -->
 const port = process.env.PORT;
+
+<!--- Configuramos las RUTAS de nuestro proyecto --->
+- Dentro del switch utilizamos un if para configurar que response.url === a la url que le indiquemos:
+case "GET":
+      res.writeHead(200, {
+        "Content-Type": "application/json; charset=utf8",
+      });
+      if (req.url === "/Inicio") {
+        res.end("Solicitud GET recibida");
+        break;
+      } else {
+        res.end("Peticion url incorrecta");
+      }
+<!-- Configuramos POST -->
+Al configurar POST podemos indicar URL para recibir informacion y mostrarla en pantalla.
+-  if(req.url === '/products'){
+        let body = "";
+        req.on("data", (chunk) => {
+          body += chunk;
+        });
+        req.on('end',()=>{
+            res.end(body);
+        });
+        }else{
+            res.end('Peticion POST incorrecta')
+        }
+      break;
+
+  <!-- Creamos nuestra base de datos / Array en formato JSON en nuestra carpeta database -->
+  
 
