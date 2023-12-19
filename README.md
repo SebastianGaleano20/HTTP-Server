@@ -1,6 +1,7 @@
 - Protocolo HTTP
 
 Indicaciones de los pasos y comandos ejecutados en este proyecto!
+(Aclaro que tiene 2 index ya que estos pasos fueron en simultaneo viendo las ultimas 2 clases y decidi juntar todo el proyecto en 1 solo. Resumiendo el proceso de la aplicacion desde inicio a fin)
 
 <!-- Iniciamos nuestro proyecto: -->
 
@@ -218,3 +219,26 @@ const port = process.env.PORT;
 
 - La data recibida en body se debe parsear para luego pushearla y reescribirla con fs.writeFileSync a la base de datos. Por ultimo le mostramos al cliente un mensaje de exito.
 
+<!-- Creamos un index refaccionado -->
+- Creamos un nuevo index para finalizar el proyecto utilizando Rutas indicandole la ruta principal:
+
+  
+  if (req.method === 'GET' && req.url === "/") {
+    const responseServer = {
+      status: 200,
+      app: "http-server-utn",
+      routes: {
+        index: "/",
+        getProducts: "/products",
+        addProducts: "/products",
+      },
+    };
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(JSON.stringify(responseServer));
+  }
+- Con el codigo brindado validamos que el metodo sea GET y la url / para mostrar la ruta principal que es la muestra del objeto responseServer
+
+- Ahora continuamos con else if agregando condiciones en la cual coincidan el metodo y la url para indicarle a la aplicacion que informacion debe mostrar. 
+- El error 404, lo indicamos en la response.writeHead(404, {'Content-Type': 'text/plain'});
+
+Gracias! 

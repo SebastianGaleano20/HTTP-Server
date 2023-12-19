@@ -46,5 +46,13 @@
     "talles": ["US 7", "US 8", "US 9", "US 10"],
     "marca": "Adidas",
     "enStock": true
+  },
+  {
+    "nombre": "Botines",
+    "precio": 199.99,
+    "sku": "BOT-002",
+    "talles": ["US 7", "US 8", "US 9", "US 10"],
+    "marca": "Nike",
+    "enStock": true
   }
 ]
